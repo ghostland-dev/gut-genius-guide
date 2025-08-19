@@ -32,9 +32,11 @@ export const HeroSection = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button variant="hero" size="xl" className="w-full sm:w-auto">
-                Commencer Gratuitement
-              </Button>
+              <a href="/auth">
+                <Button variant="hero" size="xl" className="w-full sm:w-auto">
+                  Commencer Gratuitement
+                </Button>
+              </a>
               <Button variant="outline" size="xl" className="w-full sm:w-auto">
                 Voir la Démo
               </Button>

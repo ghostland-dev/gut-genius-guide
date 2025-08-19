@@ -28,12 +28,16 @@ export const Header = () => {
           </nav>
 
           <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="sm" className="hidden md:flex">
-              Connexion
-            </Button>
-            <Button variant="hero" size="sm">
-              Commencer
-            </Button>
+            <a href="/auth">
+              <Button variant="ghost" size="sm" className="hidden md:flex">
+                Connexion
+              </Button>
+            </a>
+            <a href="/auth">
+              <Button variant="hero" size="sm">
+                Commencer
+              </Button>
+            </a>
             <Button variant="ghost" size="icon" className="md:hidden">
               <Menu className="h-5 w-5" />
             </Button>
