@@ -4,6 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { MealPlanner } from "@/components/MealPlanner";
+import { ShoppingList } from "@/components/ShoppingList";
+import { UserProfile } from "@/components/UserProfile";
 import { 
   Brain, 
   ShoppingCart, 
@@ -15,7 +18,8 @@ import {
   Bell,
   Heart,
   Apple,
-  Zap
+  Zap,
+  User
 } from "lucide-react";
 
 const nutritionData = [
@@ -95,11 +99,12 @@ export const Dashboard = () => {
 
       <div className="container mx-auto px-4 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="overview">Vue d'ensemble</TabsTrigger>
             <TabsTrigger value="nutrition">Nutrition</TabsTrigger>
             <TabsTrigger value="meals">Programmes</TabsTrigger>
             <TabsTrigger value="shopping">Courses</TabsTrigger>
+            <TabsTrigger value="profile">Profil</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview" className="space-y-8">
@@ -246,89 +251,15 @@ export const Dashboard = () => {
           </TabsContent>
 
           <TabsContent value="meals" className="space-y-8">
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold">Mes Programmes</h2>
-              <Button variant="hero">
-                <FileText className="h-4 w-4 mr-2" />
-                Nouveau Programme
-              </Button>
-            </div>
-            
-            <div className="grid md:grid-cols-2 gap-6">
-              {recentMealPlans.map((plan) => (
-                <Card key={plan.id} className="bg-gradient-card border-border/50 hover:shadow-medium transition-smooth">
-                  <CardHeader>
-                    <div className="flex items-center justify-between">
-                      <CardTitle className="text-lg">{plan.name}</CardTitle>
-                      <Badge variant={plan.status === "active" ? "default" : "secondary"}>
-                        {plan.status === "active" ? "Actif" : "Terminé"}
-                      </Badge>
-                    </div>
-                    <CardDescription>{plan.type} • {plan.duration}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      <div>
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="text-sm font-medium">Suivi</span>
-                          <span className="text-sm text-muted-foreground">{plan.compliance}%</span>
-                        </div>
-                        <Progress value={plan.compliance} className="h-2" />
-                      </div>
-                      <div className="flex space-x-2">
-                        <Button variant="outline" size="sm" className="flex-1">
-                          Modifier
-                        </Button>
-                        <Button variant="default" size="sm" className="flex-1">
-                          Voir Détails
-                        </Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+            <MealPlanner />
           </TabsContent>
 
           <TabsContent value="shopping" className="space-y-8">
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold">Listes de Courses</h2>
-              <Button variant="hero">
-                <ShoppingCart className="h-4 w-4 mr-2" />
-                Générer Liste
-              </Button>
-            </div>
-            
-            <div className="grid md:grid-cols-2 gap-6">
-              {shoppingLists.map((list) => (
-                <Card key={list.id} className="bg-gradient-card border-border/50 hover:shadow-medium transition-smooth">
-                  <CardHeader>
-                    <CardTitle className="text-lg">{list.name}</CardTitle>
-                    <CardDescription>{list.items} articles • {list.supermarket}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm font-medium">Coût estimé</span>
-                        <span className="text-lg font-bold">€{list.estimatedCost}</span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm font-medium">Économies</span>
-                        <span className="text-sm text-success font-medium">-€{list.savings}</span>
-                      </div>
-                      <div className="flex space-x-2">
-                        <Button variant="outline" size="sm" className="flex-1">
-                          Modifier
-                        </Button>
-                        <Button variant="success" size="sm" className="flex-1">
-                          Télécharger
-                        </Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+            <ShoppingList />
+          </TabsContent>
+
+          <TabsContent value="profile" className="space-y-8">
+            <UserProfile />
           </TabsContent>
         </Tabs>
       </div>
