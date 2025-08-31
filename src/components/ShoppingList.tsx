@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -100,45 +100,33 @@ export const ShoppingList = () => {
     }
   ]);
 
-  const stores: Store[] = [
-    {
-      name: 'Leclerc',
-      logo: '🏪',
-      totalPrice: calculateStoreTotal('Leclerc'),
-      savings: calculateStoreSavings('Leclerc')
-    },
-    {
-      name: 'Carrefour', 
-      logo: '🛒',
-      totalPrice: calculateStoreTotal('Carrefour'),
-      savings: calculateStoreSavings('Carrefour')
-    },
-    {
-      name: 'Auchan',
-      logo: '🏬',
-      totalPrice: calculateStoreTotal('Auchan'),
-      savings: calculateStoreSavings('Auchan')
-    }
-  ];
+  const stores: Store[] = useMemo(() => {
+    const calculateStoreTotal = (storeName: string): number => {
+      return shoppingList.reduce((total, item) => {
+        if (item.checked) return total;
+        const storePrice = item.prices.find(p => p.store === storeName);
+        if (storePrice) {
+          const quantity = parseFloat(item.quantity.replace(/[^\d.]/g, '')) / 1000; // Convert to kg
+          return total + (storePrice.price * quantity);
+        }
+        return total;
+      }, 0);
+    };
 
-  function calculateStoreTotal(storeName: string): number {
-    return shoppingList.reduce((total, item) => {
-      if (item.checked) return total;
-      const storePrice = item.prices.find(p => p.store === storeName);
-      if (storePrice) {
-        const quantity = parseFloat(item.quantity.replace(/[^\d.]/g, '')) / 1000; // Convert to kg
-        return total + (storePrice.price * quantity);
-      }
-      return total;
-    }, 0);
-  }
+    const storeNames = ['Leclerc', 'Carrefour', 'Auchan'];
+    const storeData = storeNames.map(name => ({
+      name,
+      logo: name === 'Leclerc' ? '🏪' : name === 'Carrefour' ? '🛒' : '🏬',
+      totalPrice: calculateStoreTotal(name)
+    }));
 
-  function calculateStoreSavings(storeName: string): number {
-    const allTotals = stores.map(store => calculateStoreTotal(store.name));
-    const maxPrice = Math.max(...allTotals);
-    const storePrice = calculateStoreTotal(storeName);
-    return maxPrice - storePrice;
-  }
+    const maxPrice = Math.max(...storeData.map(store => store.totalPrice));
+
+    return storeData.map(store => ({
+      ...store,
+      savings: maxPrice - store.totalPrice
+    }));
+  }, [shoppingList]);
 
   const addItem = () => {
     if (!newItem.trim()) return;

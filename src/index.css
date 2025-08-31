@@ -245,14 +245,28 @@
     transition: var(--transition-bounce);
   }
 
-  /* Glass morphism effect */
-  .glass {
-    backdrop-filter: blur(10px);
-    @apply bg-white/10 border border-white/20;
-  }
+/* High contrast mode */
+.high-contrast {
+  --background: 0 0% 100%;
+  --foreground: 0 0% 0%;
+  --primary: 210 100% 50%;
+  --border: 0 0% 50%;
+}
 
-  .glass-card {
-    backdrop-filter: blur(16px);
-    @apply bg-white/5 border border-white/10;
-  }
+.dark.high-contrast {
+  --background: 0 0% 0%;
+  --foreground: 0 0% 100%;
+  --primary: 60 100% 50%;
+  --border: 0 0% 50%;
+}
+
+/* Reduced motion */
+.reduce-motion,
+.reduce-motion *,
+.reduce-motion *::before,
+.reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
 }
