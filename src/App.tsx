@@ -1,7 +1,7 @@
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { ErrorBoundary } from "@/components/ui/error-boundary";
+import { EnhancedErrorBoundary } from "@/components/ui/enhanced-error-boundary";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
@@ -72,7 +72,12 @@ const AppContent = () => {
 };
 
 const App = () => (
-  <ErrorBoundary>
+  <EnhancedErrorBoundary 
+    onError={(error, errorInfo) => {
+      // In production, send to error tracking service
+      console.error('App Error:', error, errorInfo);
+    }}
+  >
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
@@ -82,7 +87,7 @@ const App = () => (
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
-  </ErrorBoundary>
+  </EnhancedErrorBoundary>
 );
 
 export default App;
