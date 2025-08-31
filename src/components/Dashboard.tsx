@@ -67,7 +67,7 @@ const shoppingLists = [
   }
 ];
 
-export const DashboardMain = () => {
+export const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("overview");
 
   return (

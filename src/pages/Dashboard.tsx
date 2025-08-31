@@ -1,4 +1,4 @@
-import { DashboardMain } from "@/components/Dashboard";
+import { Dashboard as DashboardComponent } from "@/components/Dashboard";
 import { SEO } from "@/components/SEO";
 
 const Dashboard = () => {
@@ -8,7 +8,7 @@ const Dashboard = () => {
         title="Tableau de Bord - SmartMealPlanner"
         description="Gérez vos programmes nutritionnels, suivez vos objectifs santé et optimisez vos courses avec SmartMealPlanner."
       />
-      <DashboardMain />
+      <DashboardComponent />
     </>
   );
 };
