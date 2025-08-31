@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,6 +7,16 @@
     <meta name="description" content="Générez des programmes alimentaires personnalisés adaptés à vos contraintes médicales avec comparaison de prix intelligente. Spécialisé neuropathie, diabète, allergies." />
     <meta name="author" content="SmartMealPlanner" />
     <meta name="keywords" content="nutrition personnalisée, neuropathie, diabète, régime médical, IA nutritionnelle, liste de courses, comparaison prix supermarché" />
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#22c55e" />
+    
+    <!-- iOS PWA Support -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="SmartMealPlanner">
+    <link rel="apple-touch-icon" href="/placeholder.svg" />
 
     <meta property="og:title" content="SmartMealPlanner - Nutrition Personnalisée et IA Médicale" />
     <meta property="og:description" content="Programmes alimentaires intelligents adaptés à vos besoins médicaux spécifiques. Optimisation économique automatique." />
@@ -16,10 +26,30 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@lovable_dev" />
     <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="/src/index.css" as="style" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   </head>
 
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+              console.log('SW registered: ', registration);
+            })
+            .catch((registrationError) => {
+              console.log('SW registration failed: ', registrationError);
+            });
+        });
+      }
+    </script>
   </body>
 </html>
